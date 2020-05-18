@@ -24,6 +24,7 @@ Number.prototype.noExponents = function () {
 let selectedCoin = 'ETH/BTC'; // TODO: Init pair
 // let selectedCoinMAIN = 'ETH/BTC';
 let toggleClickIndex = 0;
+let lastStates = [];
 
 $.fn.toggleClick = function () {
   const methods = arguments; // Store the passed arguments for future reference
@@ -61,6 +62,9 @@ $(document).ready(() => {
     document.title = `${document.title} v${version}`;
   });
 
+  // Tooltips
+  $('[data-toggle="tooltip"]').tooltip();
+
   // Reload previous states
   const marketPlaceRef = $('#main-market-place');
   const useFundPercentageRef = $('#main-amount-percentage');
@@ -72,8 +76,9 @@ $(document).ready(() => {
   const timeFrameRef = $('#main-time-frame');
   const timeFrameStableMarketRef = $('#main-time-frame-stable-market');
   const tradingStrictnessRef = $('#main-trading-strictness');
+  const skipPairRef = $('#main-skip-pair');
 
-  const mainListRef = [marketPlaceRef, useFundPercentageRef, takeProfitPctRef, stopLossPctRef, useStableMarketRef, stableMarketRef, timeOrderRef, timeFrameRef, timeFrameStableMarketRef, tradingStrictnessRef];
+  const mainListRef = [marketPlaceRef, useFundPercentageRef, takeProfitPctRef, stopLossPctRef, useStableMarketRef, stableMarketRef, timeOrderRef, timeFrameRef, timeFrameStableMarketRef, tradingStrictnessRef, skipPairRef];
 
   socket.on('isRunning', (isRunning) => {
     if (isRunning) {
@@ -84,10 +89,19 @@ $(document).ready(() => {
       $('#main-start').html('<i class="tim-icons icon-triangle-right-17"></i>Start');
     }
   });
-  socket.on('lastStates', (lastStates) => {
+
+
+  socket.on('lastStates', (states) => {
+    lastStates = states;
     Object.keys(lastStates).map((key, index) => {
       if (typeof lastStates[key] !== 'object') {
         mainListRef[index].val(lastStates[key].toString());
+      }
+
+      if (Array.isArray(lastStates[key])) {
+        $('#main-skip-pair').select2();
+        mainListRef[index].val(lastStates[key]);
+        mainListRef[index].trigger('change');
       }
     });
   });
@@ -98,6 +112,18 @@ $(document).ready(() => {
   socket.emit('fetchMarket');
   socket.on('fetchMarket', (pair) => {
     $('#pair').html(pair);
+    $('#main-skip-pair').html(pair);
+    $('#main-skip-pair').select2();
+
+    // Restore last states
+    Object.keys(lastStates).map((key, index) => {
+      if (Array.isArray(lastStates[key])) {
+        $('#main-skip-pair').select2();
+        mainListRef[index].val(lastStates[key]);
+        mainListRef[index].trigger('change');
+      }
+    });
+
     // $('#main-pair').html(pair);
     selectedCoin = $('#pair').val();
     // selectedCoinMAIN = $('#main-pair').val();
@@ -172,9 +198,10 @@ $(document).ready(() => {
     const timeFrame = $('#main-time-frame').val();
     const timeFrameStableMarket = $('#main-time-frame-stable-market').val();
     const tradingStrictness = $('#main-trading-strictness').val();
+    const skipPair = $('#main-skip-pair').val();
 
     socket.emit('main-start', {
-      marketPlace, useFundPercentage, takeProfitPct, stopLossPct, useStableMarket, stableMarket, timeOrder, timeFrame, timeFrameStableMarket, tradingStrictness,
+      marketPlace, useFundPercentage, takeProfitPct, stopLossPct, useStableMarket, stableMarket, timeOrder, timeFrame, timeFrameStableMarket, tradingStrictness, skipPair,
     });
 
     $('#main-start').html('<i class="tim-icons icon-button-pause"></i>Stop');

@@ -95,7 +95,7 @@
                           <div class="card-body">
                             <form class="form-horizontal">
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Market Place</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="The market place you want to trade, eg: BTC, ETH, BNB, ...">Market Place</label>
                                 <div class="col-md-9">
                                   <div class="form-group">
                                     <select class="custom-select dark-background" id="main-market-place"
@@ -109,7 +109,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Use Fund %</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="eg: 15% means it will use 15% of your total funds. If you have 0.01 BTC in your account, you set 50%, so that means the bot will use 0.005 BTC per trade">Use Fund %</label>
                                 <div class="col-md-9">
                                   <div class="form-group">
                                     <select class="custom-select dark-background" id="main-amount-percentage"
@@ -119,7 +119,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Take Profit %</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="% take profit, eg: The bot bought at rate 0.01, % take profit is 2.5%, it will place a selling order at rate 0.01025 (2.5%)">Take Profit %</label>
                                 <div class="col-md-6">
                                   <div class="form-group">
                                     <input type="number" class="form-control" name="main-take-profit"
@@ -131,7 +131,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Stop Loss %</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="% stop loss, eg: The bot bought at rate 0.01, % stop loss is 3%, when the last trade < 0.0097, it will stop loss (-3%)">Stop Loss %</label>
                                 <div class="col-md-6">
                                   <div class="form-group">
                                     <input type="number" class="form-control" name="main-stop-loss" id="main-stop-loss"
@@ -143,7 +143,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Use Stable Market</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="Decide to use stable market or not, eg: If your account holds BTC and USDT, the bot will scan on both 2 markets too">Use Stable Market</label>
                                 <div class="col-md-9">
                                   <div class="form-group">
                                     <select class="custom-select dark-background" id="main-use-stable-market"
@@ -155,7 +155,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Stable Market</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="The stable market you want to trade, eg: USDT, USDC, TUSD">Stable Market</label>
                                 <div class="col-md-9">
                                   <div class="form-group">
                                     <select class="custom-select dark-background" id="main-stable-market"
@@ -170,7 +170,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Time Order Expiration</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="45 means after 45 minutes, if the bot cannot buy the coin, it will cancel the order">Time Order Expiration</label>
                                 <div class="col-md-6">
                                   <div class="form-group">
                                     <input type="number" class="form-control" name="main-time-order"
@@ -183,7 +183,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Time Frame</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="The time frame for the main marketplace">Time Frame</label>
                                 <div class="col-md-9">
                                   <div class="form-group">
                                     <select class="custom-select dark-background" id="main-time-frame"
@@ -199,7 +199,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Time Frame Stable Market</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="The time frame for the stable market">Time Frame Stable Market</label>
                                 <div class="col-md-9">
                                   <div class="form-group">
                                     <select class="custom-select dark-background" id="main-time-frame-stable-market"
@@ -215,7 +215,7 @@
                                 </div>
                               </div>
                               <div class="row">
-                                <label class="col-md-3 col-form-label">Trading Strictness</label>
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="Define how often the bot will trade. I recommend to stick to the Intensive option">Trading Strictness</label>
                                 <div class="col-md-9">
                                   <div class="form-group">
                                     <select class="custom-select dark-background" id="main-trading-strictness"
@@ -226,6 +226,15 @@
                                       <option value="medium">Medium</option>
                                       <option value="low">Low</option>
                                       <option value="naive">Naive (Trade a lot, but it could be dangerous)</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <label class="col-md-3 col-form-label" data-toggle="tooltip" data-placement="top" title="If you want the bot doesn't trade on specific pairs, please list it here">Skip Pairs</label>
+                                <div class="col-md-9">
+                                  <div class="form-group">
+                                    <select class="custom-select dark-background" id="main-skip-pair" name="main-skip-pair" multiple>
                                     </select>
                                   </div>
                                 </div>
